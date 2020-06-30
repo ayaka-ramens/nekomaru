@@ -101,12 +101,45 @@ class Main {
   }
 
   game () {
+    this.inquirer
+      .prompt([
+        {
+          type: 'number',
+          name: 'int',
+          message: `主の番だよ、空いている箇所(${this.leftChoiceNumber})を入力してね`,
+          validate: (input) => {
+            if (input >= 1 && input <= 9) {
+              return true
+            } else {
+              return '半角で1~9を入力してね(上矢印↑キーで再入力)'
+            }
+          }
+        }
+      ])
+      .then(answer => {
+        // ユーザーの回答を受け、ボードを表示
+        this.userAnswers.push(answer.int)
+        this.changeInBoard(answer.int, false)
+        console.log(this.displayBoard())
+        // ネコの回答を決め、ボードを表示
+        console.log('(=^･ω･^)ﾉねこはここにする!!')
+        this.decideNekoAnswer()
+        console.log(this.displayBoard())
+      })
   }
 
   decideNekoAnswer () {
+    const randomAnswer = this.leftChoiceNumber[Math.floor(Math.random() * this.leftChoiceNumber.length)]
+    this.nekoAnswers.push(randomAnswer)
+    // 残りの選択肢からネコ回答をのぞく
+    const index = this.leftChoiceNumber.findIndex(n => n === randomAnswer)
+    this.leftChoiceNumber.splice(index, 1)
+    // ボードの数字と○を置き換える
+    this.changeInBoard(this.nekoAnswers[0], true)
   }
 
   endMessage () {
+    // 終了メッセージ表示
   }
 }
 
@@ -114,8 +147,9 @@ const pray = new Main()
 
 pray.firstMessage()
 pray.firstFight()
-while (pray.judge()) {
-  pray.game()
-  pray.displayBoard()
-}
-pray.endMessage()
+pray.game() // ここで非同期がうまくいかない
+// while (pray.judge()) {
+// pray.game()
+//   pray.displayBoard()
+// }
+// pray.endMessage()
