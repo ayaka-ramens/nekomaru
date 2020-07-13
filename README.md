@@ -4,7 +4,7 @@ Go easy on cat please❤️
 
 ## Install
 ```
-$ npm install -g nekomaru
+$ npm install nekomaru
 ```
 
 ## Usage

@@ -1,6 +1,6 @@
 {
   "name": "nekomaru",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is a TIC TAC TOE game",
   "bin": {
     "nekomaru": "./nekomaru.js"
